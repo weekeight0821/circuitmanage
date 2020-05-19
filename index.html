@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <title>WeUI</title>
+        <!-- 引入 WeUI CDN 链接 -->
+        <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.3.0/weui.min.css"/>
+        <!--引入js-->
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+                }
+            body{
+                height: 100%;
+                margin:0;
+                padding:0;
+            }
+            .container {
+                min-height: 100%;
+                height: auto !important;
+                height: 100%;
+                margin: 0 auto -60px;/*margin-bottom的负值等于footer高度*/
+                position: relative;
+            }
+            .page__bd{
+                display: none;
+
+            }
+            .page__bd2{
+                width: 100%;
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                background-color: #000;
+            }
+            .content .page__bd_show{
+                display: block;
+            }
+            .title {
+                text-align: center;
+            }
+
+            .kg {
+                margin-top: 20px;
+            }
+
+            .js {
+                border-style:solid; 
+                border-color:#98bf21;
+                border-radius: 5%;
+                margin-bottom: 20px;
+            }
+
+            span{
+                line-height: 200%;
+            }
+
+            .tj {
+                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                margin-bottom: -50px;
+            }
+
+            .weui-cell__ft .yzm {
+                margin-left: 20px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+
+            <div class="page">
+                <div class="content">
+                <!--article-->
+                    <div class="page__bd page__bd_show">
+                        <article class="weui-article">
+                            <h2 class="title">35KV柳贺 110KV柳西变电站</h2>
+                            <div class = 'kg'></div>
+                                <section>
+                                    <h3>35KV贺西变电所</h3>
+                                    <div class= 'js'>
+                                        <div class ='weui-panel__hd'>
+                                            <h6 class="cliui-vcard-box__footer"> 
+                                                <span>35KV柳贺线   16.306KM  线路运维吕梁工区</span> 
+                                            </h6>
+                                            <h6 class="cliui-vcard-box__footer"> 
+                                                <span>LGL-240 ：19#-55#:NRL60.LB14</span> 
+                                            </h6>
+                                            <h6 class="cliui-vcard-box__footer"> 
+                                                <span>GJ-50 全线路光缆</span> 
+                                            </h6>
+                                    </div>
+
+                                </div>
+                                    <p>
+                                        <!-- <img src="./images/pic_article.png" alt="">
+                                        <img src="./images/pic_article.png" alt=""> -->
+                                        <img src="./images/test1.jpg" alt="">
+                                        <img src="./images/test2.jpg" alt="">
+                                    </p>
+                                </section>
+                        </article>
+                    </div>
+                    <!--list-->
+                    <div class="page__bd">
+                        <div class="weui-search-bar" id="searchBar">
+                            <form class="weui-search-bar__form">
+                                <div class="weui-search-bar__box">
+                                    <i class="weui-icon-search"></i>
+                                    <input type="search" class="weui-search-bar__input" id="searchInput" placeholder="搜索" required/>
+                                    <a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
+                                </div>
+                                <label class="weui-search-bar__label" id="searchText">
+                                    <i class="weui-icon-search"></i>
+                                    <span>搜索</span>
+                                </label>
+                            </form>
+                            <a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+                        </div>
+
+                        <div class="weui-cells searchbar-result" id="searchResult">
+                            <div class="weui-cell weui-cell_active weui-cell_access">
+                                <div class="weui-cell__bd weui-cell_primary">
+                                    <p>2020-4-5</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell weui-cell_active weui-cell_access">
+                                <div class="weui-cell__bd weui-cell_primary">
+                                    <p>2020-4-6</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell weui-cell_active weui-cell_access">
+                                <div class="weui-cell__bd weui-cell_primary">
+                                    <p>2020-4-7</p>
+                                </div>
+                            </div>
+                            <div class="weui-cell weui-cell_active weui-cell_access">
+                                <div class="weui-cell__bd weui-cell_primary">
+                                    <p>2020-4-8</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="weui-cells">
+                            <a class="weui-cell  weui-cell_access weui-cell_example" href="./detail.html">
+                                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width: 20px; margin-right: 16px; display: block;"></div>
+                                <div class="weui-cell__bd">
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>柳林县出差</span> 
+                                    </h6>
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>2020-03-25</span> 
+                                        <span>14:19</span> 
+                                        <span>薛文龙</span> 
+                                    </h6> 
+                                </div>
+                                <div class="weui-cell__ft"><h6>巡检正常</h6></div>
+                            </a>
+                            <a class="weui-cell  weui-cell_access weui-cell_example" href="./detail.html">
+                                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width: 20px; margin-right: 16px; display: block;"></div>
+                                <div class="weui-cell__bd">
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>柳林县出差</span> 
+                                    </h6>
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>2020-03-25</span> 
+                                        <span>14:19</span> 
+                                        <span>薛文龙</span> 
+                                    </h6> 
+                                </div>
+                                <div class="weui-cell__ft"><h6>巡检故障</h6></div>
+                            </a>
+                            <a class="weui-cell  weui-cell_access weui-cell_example" href="./detail.html">
+                                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width: 20px; margin-right: 16px; display: block;"></div>
+                                <div class="weui-cell__bd">
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>柳林县出差</span> 
+                                    </h6>
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>2020-03-25</span> 
+                                        <span>14:19</span> 
+                                        <span>薛文龙</span> 
+                                    </h6> 
+                                </div>
+                                <div class="weui-cell__ft"><h6>巡检故障</h6></div>
+                            </a>
+                            <a class="weui-cell  weui-cell_access weui-cell_example" href="./detail.html">
+                                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width: 20px; margin-right: 16px; display: block;"></div>
+                                <div class="weui-cell__bd">
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>柳林县出差</span> 
+                                    </h6>
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>2020-03-25</span> 
+                                        <span>14:19</span> 
+                                        <span>薛文龙</span> 
+                                    </h6> 
+                                </div>
+                                <div class="weui-cell__ft"><h6>巡检故障</h6></div>
+                            </a>
+
+                            <a class="weui-cell  weui-cell_access weui-cell_example" href="./detail.html">
+                                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width: 20px; margin-right: 16px; display: block;"></div>
+                                <div class="weui-cell__bd">
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>柳林县出差</span> 
+                                    </h6>
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>2020-03-25</span> 
+                                        <span>14:19</span> 
+                                        <span>薛文龙</span> 
+                                    </h6> 
+                                </div>
+                                <div class="weui-cell__ft"><h6>巡检警告</h6></div>
+                            </a>
+                            <a class="weui-cell  weui-cell_access weui-cell_example" href="./detail.html">
+                                <div class="weui-cell__hd"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAC4AAAAuCAMAAABgZ9sFAAAAVFBMVEXx8fHMzMzr6+vn5+fv7+/t7e3d3d2+vr7W1tbHx8eysrKdnZ3p6enk5OTR0dG7u7u3t7ejo6PY2Njh4eHf39/T09PExMSvr6+goKCqqqqnp6e4uLgcLY/OAAAAnklEQVRIx+3RSRLDIAxE0QYhAbGZPNu5/z0zrXHiqiz5W72FqhqtVuuXAl3iOV7iPV/iSsAqZa9BS7YOmMXnNNX4TWGxRMn3R6SxRNgy0bzXOW8EBO8SAClsPdB3psqlvG+Lw7ONXg/pTld52BjgSSkA3PV2OOemjIDcZQWgVvONw60q7sIpR38EnHPSMDQ4MjDjLPozhAkGrVbr/z0ANjAF4AcbXmYAAAAASUVORK5CYII=" alt="" style="width: 20px; margin-right: 16px; display: block;"></div>
+                                <div class="weui-cell__bd">
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>柳林县出差</span> 
+                                    </h6>
+                                    <h6 class="cliui-vcard-box__footer"> 
+                                        <span>2020-03-25</span> 
+                                        <span>14:19</span> 
+                                        <span>薛文龙</span> 
+                                    </h6> 
+                                </div>
+                                <div class="weui-cell__ft"><h6>巡检警告</h6></div>
+                            </a>
+                        </div>
+                        <a href="javascript:;" class="weui-btn weui-btn_primary tj" class="weui-btn weui-btn_default" id="showIOSDialog2">添加记录</a>
+                    </div>
+                </div>
+            </div>
+            <!--tabbar-->
+            <div class="page__bd2">
+                <div class="weui-tab">
+                    <div class="weui-tab__panel">
+        
+                    </div>
+                    <div class="weui-tabbar">
+                        <div class="weui-tabbar__item weui-bar__item_on">
+                            <div style="display: inline-block; position: relative;">
+                                <img src="./images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                                <!-- <span class="weui-badge" style="position: absolute; top: -2px; right: -13px;">8</span> -->
+                            </div>
+                            <p class="weui-tabbar__label">介绍</p>
+                        </div>
+                        <div class="weui-tabbar__item">
+                            <img src="./images/icon_tabbar.png" alt="" class="weui-tabbar__icon">
+                            <p class="weui-tabbar__label">巡查记录</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="js_dialog" id="iosDialog2" style="display: none;">
+            <div class="weui-mask"></div>
+            <div class="weui-dialog">
+                <div class="weui-dialog__bd">手机验证身份</div>
+                <div class="weui-dialog__ft">
+                    <div class="weui-cells__group weui-cells__group_form">
+  
+                            <div class="weui-cell weui-cell_active">
+                                <div class="weui-cell__hd"><label class="weui-label">手机号</label></div>
+                                <div class="weui-cell__bd">
+                                    <input class="weui-input" type="number" pattern="[0-9]*" placeholder="请输入手机号" value="12345678907"/>
+                                </div>
+                            </div>
+                            <div class="weui-cell weui-cell_active weui-cell_vcode">
+                                <div class="weui-cell__hd"><label class="weui-label">验证码</label></div>
+                                <div class="weui-cell__bd">
+                                  <input autofocus class="weui-input" type="text" pattern="[0-9]*" id="js_input" placeholder="输入验证码" maxlength="6"/>
+                                </div>
+                            </div>
+                            <div class="weui-cell__ft">
+                                <button class="weui-btn weui-btn_default weui-vcode-btn yzm">获取验证码</button>
+                              </div>
+
+                        <div><a class="weui-btn weui-btn_primary yz" href="javascript:">确认</a></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </body>
+
+    <script type="text/javascript">
+        $(function(){
+            $('.weui-tabbar__item').on('click', function () {
+                $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+                $('.page__bd').eq($(this).index()).addClass('page__bd_show').siblings().removeClass('page__bd_show');
+            });
+        });
+
+        $(function(){
+        var $searchBar = $('#searchBar'),
+            $searchResult = $('#searchResult'),
+            $searchText = $('#searchText'),
+            $searchInput = $('#searchInput'),
+            $searchClear = $('#searchClear'),
+            $searchCancel = $('#searchCancel');
+            $iosDialog2 = $('#iosDialog2'),
+            $searchResult.hide();
+
+        function hideSearchResult(){
+            $searchResult.hide();
+            $searchInput.val('');
+        }
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui-search-bar_focusing');
+            $searchText.show();
+        }
+
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui-search-bar_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+            .on('blur', function () {
+                if(!this.value.length) cancelSearch();
+            })
+            .on('input', function(){
+                if(this.value.length) {
+                    $searchResult.show();
+                } else {
+                    $searchResult.hide();
+                }
+            })
+        ;
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function(){
+            cancelSearch();
+            $searchInput.blur();
+        });
+
+        $('#dialogs').on('click', '.weui-dialog__btn', function(){
+            $(this).parents('.js_dialog').fadeOut(200);
+        });
+
+        $('#showIOSDialog2').on('click', function(){
+            $iosDialog2.fadeIn(200);
+        });
+
+        $('.yz').on('click', function(){
+            　　window.location.href="add.html";
+        });
+
+    });
+    </script>
+</html>

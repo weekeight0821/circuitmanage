@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+        <title>WeUI</title>
+        <!-- 引入 WeUI CDN 链接 -->
+        <link rel="stylesheet" href="https://res.wx.qq.com/open/libs/weui/2.3.0/weui.min.css"/>
+        <!--引入js-->
+        <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+        <!--腾讯地图-->
+        <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=9c56900feaa47b3df0d5505f0d7deec5"></script> 
+        <script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+        <script src="//webapi.amap.com/ui/1.0/main.js?v=1.0.11"></script>
+        <style>
+          .return {
+            display: flex;
+            flex-direction: row;
+            background-color: #000;
+            color: white;
+            height: 50px;
+            justify-content: space-between;
+          }
+          
+          .weui-form , .weui-msg{
+            padding-top: 0;
+          }
+
+          .title_name {
+            margin: 13px;
+            margin-right: 150px;
+            float: left;
+          }
+          .return-icon{ margin: 10px 5px; font-size:20px}
+          .weui-form__control-area {
+            margin-top: 0;
+          }
+          #container {width:300px; height: 180px; }  
+        </style>
+    </head>
+    <div class="page">
+      <div class="weui-cell__ft return">
+        <span class="return-icon"><</span>
+        <span class="title_name">巡查记录详情</span>
+      </div>
+        <div class="weui-form">
+          
+          <div class="weui-form__text-area">
+            <div class="weui-msg">
+                <div class="weui-msg__icon-area"><i class="weui-icon-success weui-icon_msg"></i></div>
+                <div class="weui-msg__text-area">
+                    <h2 class="weui-msg__title">巡检正常</h2>
+                </div>
+            </div>
+          </div>
+
+          <div class="weui-form__control-area">
+            <div class="weui-cells__group weui-cells__group_form">
+              <div class="weui-cells__title">柳林县巡检</div>
+
+                <div class="weui-cells weui-cells_form">
+                    <div class="weui-cell weui-cell_active weui-cell_readonly">
+                        <div class="weui-cell__hd"><label class="weui-label">巡视人</label></div>
+                        <div class="weui-cell__bd">
+                            <input class="weui-input" value="张三" readonly/>
+                        </div>
+                    </div>
+
+                  <div class="weui-cell weui-cell_active weui-cell_readonly">
+                    <div class="weui-cell__hd"><label class="weui-label">巡视时间</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" value="2020-05-09 04:56" readonly/>
+                    </div>
+                  </div>
+
+                  <div class="weui-cell weui-cell_active weui-cell_readonly">
+                    <div class="weui-cell__hd"><label class="weui-label">巡视结果</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" value="正常" readonly/>
+                    </div>
+                  </div>
+
+                  <div class="weui-cell weui-cell_active weui-cell_readonly">
+                    <div class="weui-cell__hd"><label class="weui-label">影像资料</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" value="无" readonly/>
+                    </div>
+                  </div>
+
+                  <div class="weui-cell weui-cell_active weui-cell_readonly">
+                    <div class="weui-cell__hd"><label class="weui-label">异常录音说明</label></div>
+                    <div class="weui-cell__bd">
+                        <input class="weui-input" value="无" readonly/>
+                    </div>
+                  </div>
+
+                  <div class="weui-cell weui-cell_active weui-cell_readonly">
+                    <div class="weui-cell__hd"><label class="weui-label">位置</label></div>
+                      <div id="container"></div> 
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        </div>
+    </div>
+      <script type="text/javascript">
+        window.onLoad  = function(){
+        var map = new AMap.Map('container');
+      }
+
+      var map = new AMap.Map('container', {
+        zoom:11,//级别
+        center: [116.397428, 39.90923],//中心点坐标
+        viewMode:'3D',//使用3D视图
+        resizeEnable: true
+    });
+          $(function(){
+            var $toast = $('#js_toast');
+            var $input = $('#js_input');
+            $input.on('input', function(){
+              if ($input.val()){
+                $('#showTooltips').removeClass('weui-btn_disabled');
+              }else{
+                $('#showTooltips').addClass('weui-btn_disabled');
+              }
+            });
+            $('#showTooltips').on('click', function(){
+              if ($(this).hasClass('weui-btn_disabled')) return;
+      
+              // toptips的fixed, 如果有`animation`, `position: fixed`不生效
+              $('.page.cell').removeClass('slideIn');
+      
+              $toast.fadeIn(100);
+              setTimeout(function () {
+                $toast.fadeOut(100);
+              }, 2000);
+            });
+          });
+
+    /**
+    * Created by Mark on 2018/5/3.
+    */
+    //定位
+    map.plugin('AMap.Geolocation', function () {
+        geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+            maximumAge: 0,           //定位结果缓存0毫秒，默认：0
+            convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
+            showButton: true,        //显示定位按钮，默认：true
+            buttonPosition: 'LB',    //定位按钮停靠位置，默认：'LB'，左下角
+            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
+            showCircle: true,        //定位成功后用圆圈表示定位精度范围，默认：true
+            panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
+            zoomToAccuracy:true      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+        });
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);//返回定位信息
+        AMap.event.addListener(geolocation, 'error', onError);      //返回定位出错信息
+    });
+
+    //解析定位结果
+    function onComplete(data) {
+        if(data.status == 1){
+            console.log("定位成功");
+            $("#addressInput").val(data.formattedAddress);
+            sessionStorage.setItem("dingWei-lng",data.position.getLng());
+            sessionStorage.setItem("dingWei-lat",data.position.getLat());
+        }
+        var str = [];
+        str.push('经度：' + data.position.getLng());
+        str.push('纬度：' + data.position.getLat());
+        str.push('是否经过偏移：' + (data.isConverted ? '是' : '否'));
+        console.log(str.join('<br>'));
+    }
+    function onError() {
+        var str = [];
+        str.push('定位失败');
+        console.log(str.join('<br>'));
+    }
+    var $return_icon = $('.return-icon');
+        $return_icon.on('click', function(){
+            window.history.go(-1);
+        });
+    </script>
+</html>
